@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Brief</title>
+<style>
+:root { color-scheme: light; }
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#f0f4f8;--surface:#fff;--surface2:#f8fafc;--border:#e2e8f0;--border2:#cbd5e1;
+  --blue:#1d4ed8;--blue-lt:#eff6ff;--blue-md:#dbeafe;
+  --cyan:#0891b2;--green:#059669;--green-lt:#ecfdf5;
+  --red:#dc2626;--red-lt:#fef2f2;--gold:#d97706;--gold-lt:#fffbeb;
+  --purple:#7c3aed;--purple-lt:#f5f3ff;
+  --text:#0f172a;--text2:#334155;--text3:#64748b;--text4:#94a3b8;
+  --sh:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);
+}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;min-height:100vh;padding-bottom:30px;font-size:15px;line-height:1.6;}
+
+/* HEADER */
+.hdr{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--sh);}
+.hdr-in{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-ico{width:36px;height:36px;background:linear-gradient(135deg,#1d4ed8,#0891b2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.logo-name{font-size:15px;font-weight:800;letter-spacing:-.4px;}
+.logo-sub{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;font-weight:500;}
+.nav-g{display:flex;align-items:center;gap:6px;}
+.nav-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text2);border-radius:8px;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;transition:all .15s;flex-shrink:0;}
+.nav-btn:hover:not(:disabled){background:var(--blue-md);border-color:var(--blue);color:var(--blue);}
+.nav-btn:disabled{opacity:.35;cursor:default;}
+.date-pill{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:4px 10px;text-align:center;min-width:108px;}
+.date-pill-lbl{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.8px;font-weight:600;display:block;}
+.date-pill-val{font-size:12px;font-weight:700;display:block;}
+
+/* TICKER */
+.ticker{background:var(--text);padding:6px 0;overflow:hidden;}
+.ticker-in{max-width:860px;margin:0 auto;padding:0 16px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.ticker-in::-webkit-scrollbar{display:none;}
+.ticker-row{display:flex;align-items:center;width:max-content;}
+.ti{display:flex;align-items:center;gap:6px;padding:0 16px;border-right:1px solid rgba(255,255,255,.1);white-space:nowrap;}
+.ti:first-child{padding-left:0;}
+.ti:last-child{border-right:none;}
+.tl{font-size:10px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px;font-weight:600;}
+.tv{font-size:13px;font-weight:700;color:rgba(255,255,255,.95);font-variant-numeric:tabular-nums;}
+.tc{font-size:11px;font-weight:600;padding:1px 5px;border-radius:4px;}
+.tc.pos{color:#34d399;background:rgba(52,211,153,.15);}
+.tc.neg{color:#f87171;background:rgba(248,113,113,.15);}
+.t-time{font-size:10px;color:rgba(255,255,255,.35);padding:0 16px;white-space:nowrap;}
+
+/* MAIN */
+.main{max-width:860px;margin:0 auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px;}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--sh);}
+.ch{padding:13px 18px 11px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
+.ct{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:var(--text3);}
+.ci{font-size:15px;}
+.badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;letter-spacing:.3px;}
+.b-blue{background:var(--blue-md);color:var(--blue);}
+.b-green{background:var(--green-lt);color:var(--green);}
+.b-gold{background:var(--gold-lt);color:var(--gold);}
+.b-purple{background:var(--purple-lt);color:var(--purple);}
+.b-gray{background:var(--surface2);color:var(--text4);border:1px solid var(--border);}
+.b-red{background:var(--red-lt);color:var(--red);}
+.cb{padding:16px 18px;}
+
+/* HIGHLIGHTS */
+.ch-hl{background:var(--blue-lt);border-bottom-color:var(--blue-md);}
+.ch-hl .ct{color:var(--blue);}
+.hl-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.hl-item{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.65;color:var(--text2);}
+.hl-dot{width:7px;height:7px;border-radius:50%;background:var(--blue);margin-top:7px;flex-shrink:0;}
+
+/* HILO */
+.hilo-list{display:flex;flex-direction:column;gap:10px;}
+.hilo-item{border:1px solid var(--border);border-radius:10px;padding:12px 14px;background:var(--surface2);}
+.hilo-item.st-ongoing{border-left:3px solid var(--blue);}
+.hilo-item.st-closed{border-left:3px solid var(--text4);opacity:.7;}
+.hilo-item.st-new{border-left:3px solid var(--green);}
+.hilo-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:7px;flex-wrap:wrap;}
+.hilo-topic{font-size:13px;font-weight:700;}
+.hilo-upd{font-size:13px;color:var(--text2);line-height:1.65;}
+.hilo-meta{font-size:10px;color:var(--text4);margin-top:6px;}
+
+/* SECTIONS */
+.sec-body{font-size:14px;line-height:1.8;color:var(--text2);}
+.sec-body p{margin-bottom:12px;}
+.sec-body p:last-child{margin-bottom:0;}
+.mtr-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;}
+.mtr{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;}
+.mtr-lbl{font-size:10px;font-weight:600;color:var(--text4);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px;}
+.mtr-row{display:flex;align-items:baseline;justify-content:space-between;gap:4px;}
+.mtr-val{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums;}
+.mtr-chg{font-size:11px;font-weight:700;padding:2px 6px;border-radius:5px;}
+.mtr-chg.pos{color:var(--green);background:var(--green-lt);}
+.mtr-chg.neg{color:var(--red);background:var(--red-lt);}
+
+/* SECTION HEADER VARIANTS */
+.ch-usa{background:var(--blue-lt);border-bottom-color:var(--blue-md);}
+.ch-usa .ct{color:var(--blue);}
+.ch-arg{background:#fef9ec;border-bottom-color:#fde68a;}
+.ch-arg .ct{color:var(--gold);}
+.ch-mac{background:#f0fdf4;border-bottom-color:#bbf7d0;}
+.ch-mac .ct{color:var(--green);}
+.ch-cry{background:var(--purple-lt);border-bottom-color:#ddd6fe;}
+.ch-cry .ct{color:var(--purple);}
+.ch-con{background:var(--gold-lt);border-bottom-color:#fde68a;}
+.ch-con .ct{color:var(--gold);}
+.ch-src{background:#f1f5f9;border-bottom-color:var(--border2);}
+.ch-src .ct{color:var(--text3);}
+
+/* CONCLUSIONS */
+.con-text{font-size:14px;line-height:1.85;color:var(--text2);margin-bottom:14px;}
+.watch-box{background:var(--gold-lt);border:1px solid #fde68a;border-radius:10px;padding:12px 14px;font-size:13px;color:var(--gold);line-height:1.6;}
+.watch-box strong{font-weight:700;display:block;margin-bottom:4px;font-size:10px;text-transform:uppercase;letter-spacing:.5px;}
+
+/* AUDIO PLAYER */
+.ch-audio{background:#0f172a;border-bottom-color:#1e293b;}
+.ch-audio .ct{color:#94a3b8;}
+.audio-body{background:#0f172a;padding:16px 18px;display:flex;flex-direction:column;gap:14px;}
+.audio-status{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;}
+.as-idle{background:rgba(100,116,139,.15);color:#94a3b8;}
+.as-playing{background:rgba(16,185,129,.15);color:#34d399;animation:pulse-dot 1.5s infinite;}
+.as-paused{background:rgba(245,158,11,.15);color:#fbbf24;}
+.as-finished{background:rgba(59,130,246,.15);color:#60a5fa;}
+.as-error{background:rgba(239,68,68,.15);color:#f87171;}
+@keyframes pulse-dot{0%,100%{opacity:1;}50%{opacity:.6;}}
+
+.voice-row{display:flex;flex-direction:column;gap:5px;}
+.audio-label{font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.5px;}
+.voice-select{background:#1e293b;border:1px solid #334155;color:#e2e8f0;border-radius:8px;padding:7px 10px;font-size:13px;width:100%;cursor:pointer;}
+.voice-select:focus{outline:none;border-color:#3b82f6;}
+
+.sliders-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.slider-group{display:flex;flex-direction:column;gap:5px;}
+.slider-header{display:flex;justify-content:space-between;align-items:center;}
+.slider-val{font-size:11px;font-weight:700;color:#60a5fa;}
+input[type=range]{width:100%;height:4px;border-radius:2px;background:#334155;accent-color:#3b82f6;cursor:pointer;}
+
+.play-controls{display:flex;gap:8px;flex-wrap:wrap;}
+.pb{border:none;border-radius:9px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .15s;white-space:nowrap;}
+.pb:disabled{opacity:.3;cursor:default;}
+.pb-play{background:linear-gradient(135deg,#1d4ed8,#0891b2);color:#fff;}
+.pb-play:hover:not(:disabled){background:linear-gradient(135deg,#1e40af,#0e7490);}
+.pb-pause{background:#1e293b;color:#fbbf24;border:1px solid #334155;}
+.pb-pause:hover:not(:disabled){background:#334155;}
+.pb-resume{background:#1e293b;color:#34d399;border:1px solid #334155;}
+.pb-resume:hover:not(:disabled){background:#334155;}
+.pb-stop{background:#1e293b;color:#f87171;border:1px solid #334155;}
+.pb-stop:hover:not(:disabled){background:#334155;}
+
+.progress-wrap{background:#1e293b;border-radius:4px;height:4px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,#1d4ed8,#06b6d4);border-radius:4px;transition:width .3s ease;width:0%;}
+.progress-lbl{font-size:10px;color:#475569;margin-top:4px;text-align:right;}
+
+.no-speech{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:14px;font-size:13px;color:#94a3b8;line-height:1.6;}
+
+/* SOURCES */
+.src-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.src-item{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;text-decoration:none;display:block;transition:border-color .15s;}
+.src-item:hover{border-color:var(--blue);}
+.src-name{font-size:12px;font-weight:700;color:var(--text);display:block;margin-bottom:2px;}
+.src-topics{font-size:11px;color:var(--text4);}
+
+/* LOADING / EMPTY */
+.loading-state,.empty-state{text-align:center;padding:56px 24px;color:var(--text3);}
+.spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.empty-state h3{font-size:17px;margin-bottom:8px;color:var(--text2);}
+.empty-state p{font-size:14px;line-height:1.6;max-width:320px;margin:0 auto;}
+
+/* RESPONSIVE */
+@media(min-width:580px){
+  .mtr-grid{grid-template-columns:repeat(4,1fr);}
+  .main{padding:16px 20px;}
+  .src-grid{grid-template-columns:repeat(4,1fr);}
+}
+@media(max-width:480px){
+  .sliders-grid{grid-template-columns:1fr;}
+  .play-controls{gap:6px;}
+  .pb{padding:8px 10px;font-size:12px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-in">
+    <div class="logo">
+      <div class="logo-ico">📈</div>
+      <div>
+        <div class="logo-name">Market Brief</div>
+        <div class="logo-sub">Daily · Juanma</div>
+      </div>
+    </div>
+    <div class="nav-g">
+      <button class="nav-btn" id="prevBtn" onclick="navigateDay(1)" title="Día anterior">‹</button>
+      <div class="date-pill">
+        <span class="date-pill-lbl" id="dayLabel">HOY</span>
+        <span class="date-pill-val" id="dayValue">—</span>
+      </div>
+      <button class="nav-btn" id="nextBtn" onclick="navigateDay(-1)" title="Día siguiente">›</button>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-in">
+    <div class="ticker-row">
+      <div class="ti"><span class="tl">BTC</span><span class="tv" id="t-btc-v">—</span><span class="tc" id="t-btc-c">—</span></div>
+      <div class="ti"><span class="tl">USD Blue</span><span class="tv" id="t-usd-v">—</span><span class="tc" id="t-usd-c">—</span></div>
+      <div class="ti"><span class="tl">S&P 500</span><span class="tv" id="t-sp-v">—</span><span class="tc" id="t-sp-c">—</span></div>
+      <div class="t-time" id="t-time">Actualizando...</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="main" id="main">
+  <div class="card"><div class="cb"><div class="loading-state"><div class="spinner"></div>Cargando resumen...</div></div></div>
+</div>
+
+<script>
+// ╔══════════════════════════════════════════════════════╗
+// ║  CONFIG                                             ║
+// ╚══════════════════════════════════════════════════════╝
+const DATA_BASE = 'https://juanmanuelmorello.github.io/market-brief/data';
+
+// ╔══════════════════════════════════════════════════════╗
+// ║  STORAGE — localStorage con hasta 30 días           ║
+// ╚══════════════════════════════════════════════════════╝
+const SK='mb_v4',MD=30;
+function getStore(){try{return JSON.parse(localStorage.getItem(SK)||'{}');}catch(e){return{};}}
+function saveStore(s){try{localStorage.setItem(SK,JSON.stringify(s));}catch(e){}}
+function persist(d){const s=getStore();s[d.date]=d;const k=Object.keys(s).sort();while(k.length>MD)delete s[k.shift()];saveStore(s);}
+function getDates(){return Object.keys(getStore()).sort().reverse();}
+function getByDate(dt){return getStore()[dt]||null;}
+
+// ╔══════════════════════════════════════════════════════╗
+// ║  FETCH — descarga JSON desde GitHub Pages           ║
+// ╚══════════════════════════════════════════════════════╝
+async function fetchDay(date) {
+  const url = date ? `${DATA_BASE}/${date}.json` : `${DATA_BASE}/latest.json`;
+  try {
+    const r = await fetch(url + '?t=' + Date.now()); // cache-bust
+    if (!r.ok) return null;
+    return await r.json();
+  } catch(e) { return null; }
+}
+
+// NAVIGATION
+let offset=0;
+async function navigateDay(delta){
+  const ds=getDates();
+  const ni=offset+delta;
+  if(ni<0)return;
+  offset=ni;
+  if(ni<ds.length){
+    let d=getByDate(ds[ni]);
+    if(!d){d=await fetchDay(ds[ni]);if(d)persist(d);}
+    render(d);
+  } else {
+    renderEmpty();
+  }
+  syncNav();
+}
+function syncNav(){const ds=getDates();document.getElementById('prevBtn').disabled=offset>=ds.length-1;document.getElementById('nextBtn').disabled=offset<=0;}
+
+// FORMATTING
+const MO=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const WD=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+function fmtDate(s){if(!s)return{lbl:'—',val:'—',isT:false};const[y,m,d]=s.split('-').map(Number);const dt=new Date(y,m-1,d);const today=new Date().toISOString().split('T')[0];return{lbl:s===today?'HOY':WD[dt.getDay()].toUpperCase(),val:`${d} ${MO[m-1]} ${y}`,isT:s===today};}
+function fmtTime(iso){try{return new Date(iso).toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit',timeZone:'America/Argentina/Buenos_Aires'})+' ARG';}catch(e){return '';}}
+function setTick(vi,ci,t){if(!t)return;document.getElementById(vi).textContent=t.price;const el=document.getElementById(ci);el.textContent=t.change;el.className='tc '+(t.positive?'pos':'neg');}
+
+// RENDER
+function render(data){
+  if(!data){renderEmpty();return;}
+  const fd=fmtDate(data.date);
+  document.getElementById('dayLabel').textContent=fd.lbl;
+  document.getElementById('dayValue').textContent=fd.val;
+  const t=data.ticker||{};
+  setTick('t-btc-v','t-btc-c',t.btc);
+  setTick('t-usd-v','t-usd-c',t.usd);
+  setTick('t-sp-v','t-sp-c',t.sp500);
+  document.getElementById('t-time').textContent='Actualizado '+fmtTime(data.generated);
+  document.getElementById('main').innerHTML=[
+    htmlHL(data),htmlHilo(data.hiloConductor),
+    htmlSec('usa',data.sections?.usa),htmlSec('argentina',data.sections?.argentina),
+    htmlSec('macro',data.sections?.macro),htmlSec('crypto',data.sections?.crypto),
+    htmlAudio(data),htmlConc(data),htmlSrc(data.sources)
+  ].filter(Boolean).join('');
+  initAudioPlayer(data);
+}
+
+function renderEmpty(){
+  const ds=getDates();const fd=ds[offset]?fmtDate(ds[offset]):{lbl:'—',val:'Sin datos'};
+  document.getElementById('dayLabel').textContent=fd.lbl;
+  document.getElementById('dayValue').textContent=fd.val;
+  document.getElementById('main').innerHTML=`<div class="card"><div class="cb"><div class="empty-state"><h3>Sin resumen para este día</h3><p>No hay datos almacenados. El resumen se publica automáticamente a las 7am ARG.</p></div></div></div>`;
+}
+
+function htmlHL(data){
+  if(!data.highlights?.length)return'';
+  const items=data.highlights.map(h=>`<li class="hl-item"><span class="hl-dot"></span><span>${h}</span></li>`).join('');
+  return`<div class="card"><div class="ch ch-hl"><div class="ct"><span class="ci">⚡</span>Highlights del día</div><span class="badge b-blue">RESUMEN</span></div><div class="cb"><ul class="hl-list">${items}</ul></div></div>`;
+}
+
+function htmlHilo(items){
+  if(!items?.length)return'';
+  const sm={ongoing:{l:'En seguimiento',c:'b-blue'},new:{l:'Nuevo hoy',c:'b-green'},closed:{l:'Cerrado',c:'b-gray'}};
+  const list=items.map(it=>{const s=sm[it.status]||sm.ongoing;return`<div class="hilo-item st-${it.status||'ongoing'}"><div class="hilo-top"><span class="hilo-topic">📌 ${it.topic}</span><span class="badge ${s.c}">${s.l}</span></div><div class="hilo-upd">${it.update}</div><div class="hilo-meta">🕐 Última mención: ${it.lastMention||'—'}</div></div>`;}).join('');
+  return`<div class="card"><div class="ch"><div class="ct"><span class="ci">🧵</span>Hilo Conductor</div><span class="badge b-purple">SEGUIMIENTO</span></div><div class="cb"><div class="hilo-list">${list}</div></div></div>`;
+}
+
+function htmlSec(key,sec){
+  if(!sec)return'';
+  const paras=(sec.content||'').split('\n\n').filter(p=>p.trim()).map(p=>`<p>${p.trim()}</p>`).join('');
+  const mtrs=(sec.items||[]).map(m=>`<div class="mtr"><div class="mtr-lbl">${m.label}</div><div class="mtr-row"><span class="mtr-val">${m.value}</span><span class="mtr-chg ${m.positive?'pos':'neg'}">${m.change}</span></div></div>`).join('');
+  return`<div class="card"><div class="ch ${sec.hc||''}"><div class="ct"><span class="ci">${sec.icon}</span>${sec.title}</div><span class="badge ${sec.bc||''}">${sec.bt||''}</span></div><div class="cb"><div class="sec-body">${paras}</div><div class="mtr-grid">${mtrs}</div></div></div>`;
+}
+
+function htmlAudio(data){
+  if(!window.speechSynthesis)return`<div class="card"><div class="ch ch-audio"><div class="ct"><span class="ci">🎙</span>Reproductor de Audio</div></div><div class="audio-body"><div class="no-speech">Tu navegador no permite la lectura de voz. Probá abrir en la última versión de Chrome o Edge.</div></div></div>`;
+  return`<div class="card"><div class="ch ch-audio"><div class="ct"><span class="ci">🎙</span>Reproductor de Audio</div><span class="audio-status as-idle" id="audioStatus">Listo</span></div><div class="audio-body"><div class="voice-row"><span class="audio-label">Voz</span><select class="voice-select" id="voiceSelect" onchange="AP.onVoiceChange()"><option value="">Cargando voces...</option></select></div><div class="sliders-grid"><div class="slider-group"><div class="slider-header"><span class="audio-label">Velocidad</span><span class="slider-val" id="rateVal">0,95×</span></div><input type="range" id="rateSlider" min="0.5" max="2" step="0.05" value="0.95" oninput="AP.onRate(this.value)"></div><div class="slider-group"><div class="slider-header"><span class="audio-label">Tono</span><span class="slider-val" id="pitchVal">1,0</span></div><input type="range" id="pitchSlider" min="0.5" max="2" step="0.1" value="1.0" oninput="AP.onPitch(this.value)"></div><div class="slider-group"><div class="slider-header"><span class="audio-label">Volumen</span><span class="slider-val" id="volVal">100%</span></div><input type="range" id="volSlider" min="0" max="1" step="0.05" value="1" oninput="AP.onVol(this.value)"></div></div><div class="play-controls"><button class="pb pb-play" id="btnPlay" onclick="AP.play()">▶ Reproducir</button><button class="pb pb-pause" id="btnPause" onclick="AP.pause()" disabled>⏸ Pausar</button><button class="pb pb-resume" id="btnResume" onclick="AP.resume()" disabled>▶ Reanudar</button><button class="pb pb-stop" id="btnStop" onclick="AP.stop()" disabled>⏹ Detener</button></div><div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div><div class="progress-lbl" id="progressLbl"></div></div></div>`;
+}
+
+function htmlConc(data){
+  if(!data.conclusions)return'';
+  const paras=(data.conclusions||'').split('\n\n').filter(p=>p.trim()).map(p=>`<p>${p.trim()}</p>`).join('');
+  return`<div class="card"><div class="ch ch-con"><div class="ct"><span class="ci">🎯</span>Conclusiones</div><span class="badge b-gold">ANÁLISIS</span></div><div class="cb"><div class="con-text">${paras}</div>${data.watchNext?`<div class="watch-box"><strong>👁 A seguir esta semana</strong>${data.watchNext}</div>`:''}</div></div>`;
+}
+
+function htmlSrc(sources){
+  if(!sources?.length)return'';
+  const items=sources.map(s=>`<a class="src-item" href="${s.url}" target="_blank" rel="noopener"><span class="src-name">${s.name}</span><span class="src-topics">${s.topics}</span></a>`).join('');
+  return`<div class="card"><div class="ch ch-src"><div class="ct"><span class="ci">📎</span>Fuentes del día</div></div><div class="cb"><div class="src-grid">${items}</div></div></div>`;
+}
+
+// ╔══════════════════════════════════════════════════════╗
+// ║  AUDIO PLAYER — Web Speech API                      ║
+// ╚══════════════════════════════════════════════════════╝
+
+const _o=['','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez','once','doce','trece','catorce','quince','dieciséis','diecisiete','dieciocho','diecinueve','veinte','veintiuno','veintidós','veintitrés','veinticuatro','veinticinco','veintiséis','veintisiete','veintiocho','veintinueve'];
+const _t=['','','veinte','treinta','cuarenta','cincuenta','sesenta','setenta','ochenta','noventa'];
+const _c=['','cien','doscientos','trescientos','cuatrocientos','quinientos','seiscientos','setecientos','ochocientos','novecientos'];
+function n2w(n){
+  n=Math.round(n);if(n<0)return'menos '+n2w(-n);if(n===0)return'cero';
+  if(n<30)return _o[n]||'';
+  if(n<100){const t=Math.floor(n/10),r=n%10;return r===0?_t[t]:_t[t]+' y '+_o[r];}
+  if(n<1000){const h=Math.floor(n/100),r=n%100;const hw=(h===1&&r>0)?'ciento':_c[h];return r===0?hw:hw+' '+n2w(r);}
+  if(n<1000000){const k=Math.floor(n/1000),r=n%1000;const kw=k===1?'mil':n2w(k).replace(/uno$/,'un')+' mil';return r===0?kw:kw+' '+n2w(r);}
+  return n.toLocaleString('es-AR');
+}
+function sayNum(str){const c=String(str).replace(/[US$\s]/g,'').replace(/\./g,'').replace(',','.');const n=parseFloat(c);return isNaN(n)?str:n2w(Math.round(n));}
+function sayPct(str){
+  const neg=str.trim().startsWith('-');
+  const clean=str.replace(/[+\-%\s]/g,'').replace(',','.');
+  const parts=clean.split('.');
+  const intPart=parseInt(parts[0]||'0');
+  const decPart=parts[1]?parseInt(parts[1]):0;
+  return(neg?'menos ':'')+n2w(intPart)+(decPart>0?' coma '+n2w(decPart):'')+' por ciento';
+}
+const _exp=new Set();
+function resetExp(){_exp.clear();}
+function ex(key,full){if(_exp.has(key))return key;_exp.add(key);return`${key} —${full}—`;}
+function cleanTTS(txt){
+  if(!txt)return'';let r=txt;
+  r=r.replace(/\bBeth Hammack\b/g,()=>ex('Beth Hammack','presidenta de la Reserva Federal de Cleveland'));
+  r=r.replace(/\bJerome Powell\b|\bPowell\b/g,()=>ex('Powell','Jerome Powell, presidente de la Reserva Federal'));
+  r=r.replace(/\bStandard Chartered\b/g,()=>ex('Standard Chartered','el banco inglés de inversión Standard Chartered'));
+  r=r.replace(/\bBlackRock\b/g,()=>ex('BlackRock','BlackRock, el mayor gestor de activos del mundo'));
+  r=r.replace(/\bASML\b/g,()=>ex('ASML','ASML, el fabricante holandés de máquinas para semiconductores'));
+  r=r.replace(/\bCPI\b/g,()=>ex('CPI','es decir el Índice de Precios al Consumidor de Estados Unidos'));
+  r=r.replace(/\bFed\b/g,()=>ex('Fed','la Reserva Federal, banco central de los Estados Unidos'));
+  r=r.replace(/\bVIX\b/g,()=>ex('VIX','el índice del miedo, que mide la volatilidad esperada del mercado'));
+  r=r.replace(/\bETFs?\b/g,()=>ex('ETF','fondo cotizado en bolsa'));
+  r=r.replace(/\bIBIT\b/g,()=>ex('IBIT','el ETF de Bitcoin de BlackRock'));
+  r=r.replace(/\bEMBI\b/g,()=>ex('EMBI','el Índice de Bonos de Mercados Emergentes elaborado por JPMorgan'));
+  r=r.replace(/\bWTI\b/g,()=>ex('WTI','West Texas Intermediate, la referencia de precio del crudo americano'));
+  r=r.replace(/\bDXY\b/g,()=>ex('DXY','el índice del dólar frente a otras divisas principales'));
+  r=r.replace(/\bCCL\b/g,()=>ex('CCL','dólar contado con liquidación, tipo de cambio bursátil'));
+  r=r.replace(/\bMEP\b/g,()=>ex('MEP','dólar MEP, tipo de cambio legal operado en la bolsa'));
+  r=r.replace(/\bJPMorgan\b/g,()=>ex('JPMorgan','JPMorgan, el mayor banco americano por activos'));
+  r=r.replace(/US\$\s?([\d.]+)/g,(_,n)=>sayNum(n)+' dólares');
+  r=r.replace(/\$\s?([\d.]+)/g,(_,n)=>sayNum(n)+' pesos');
+  r=r.replace(/([+-]?\d+),(\d+)%/g,(m,i,d)=>{const neg=m[0]==='-';return(neg?'menos ':'')+n2w(Math.abs(parseInt(i)))+' coma '+n2w(parseInt(d))+' por ciento';});
+  r=r.replace(/([+-]?\d+)%/g,(m,i)=>(m[0]==='-'?'menos ':'')+n2w(Math.abs(parseInt(i)))+' por ciento');
+  r=r.replace(/(\d+)\s*bps/g,(_,n)=>n2w(parseInt(n))+' puntos básicos');
+  r=r.replace(/\b(\d{1,3})\.(\d{3})\b/g,(_,a,b)=>n2w(parseInt(a+b)));
+  r=r.replace(/\b(\d+),(\d+)\b/g,(_,i,d)=>n2w(parseInt(i))+' coma '+n2w(parseInt(d)));
+  return r;
+}
+
+const AP = {
+  chunks: [], idx: 0, state: 'idle', data: null,
+  buildScript(data) {
+    if (!data) return 'No hay resumen disponible.';
+    resetExp();
+    const fd = fmtDate(data.date);
+    const t = data.ticker || {};
+    const lines = [];
+    lines.push(`Bienvenidos al Market Brief del ${fd.lbl === 'HOY' ? 'día de hoy' : fd.lbl.toLowerCase()}, ${fd.val}.`);
+    lines.push(`Arrancamos con los tres números clave del momento.`);
+    if (t.btc) lines.push(`Bitcoin cotiza en ${sayNum(t.btc.price)} dólares, con ${t.btc.positive ? 'una suba' : 'una baja'} de ${sayPct(t.btc.change)} en las últimas veinticuatro horas.`);
+    if (t.usd) lines.push(`El dólar blue en Argentina —el que se opera en el mercado informal— marca ${sayNum(t.usd.price)} pesos para la venta.`);
+    if (t.sp500) lines.push(`El S&P quinientos opera en ${sayNum(t.sp500.price)} puntos, con ${t.sp500.positive ? 'una suba' : 'una baja'} de ${sayPct(t.sp500.change)}.`);
+    lines.push(`Pasemos a los cinco puntos que necesitás saber hoy.`);
+    (data.highlights || []).forEach((h, i) => {
+      const ord = ['Primero','Segundo','Tercero','Cuarto','Quinto'][i] || `Punto ${i+1}`;
+      lines.push(`${ord}. ${cleanTTS(h)}.`);
+    });
+    const activos = (data.hiloConductor || []).filter(h => h.status !== 'closed');
+    if (activos.length) {
+      lines.push(`Ahora, los temas que seguimos de días anteriores.`);
+      activos.forEach(h => lines.push(`Sobre ${h.topic}: ${cleanTTS(h.update)}.`));
+    }
+    const s = data.sections || {};
+    if (s.usa)       { lines.push(`Mercado americano.`);          lines.push(cleanTTS(s.usa.content.replace(/\n+/g,' '))); }
+    if (s.argentina) { lines.push(`Argentina.`);                  lines.push(cleanTTS(s.argentina.content.replace(/\n+/g,' '))); }
+    if (s.macro)     { lines.push(`Macro global.`);               lines.push(cleanTTS(s.macro.content.replace(/\n+/g,' '))); }
+    if (s.crypto)    { lines.push(`Bitcoin y el mercado cripto.`); lines.push(cleanTTS(s.crypto.content.replace(/\n+/g,' '))); }
+    if (data.conclusions) { lines.push(`Para cerrar, el análisis del día.`); lines.push(cleanTTS(data.conclusions.replace(/\n+/g,' '))); }
+    if (data.watchNext) lines.push(`Y antes de que te vayas, esto es lo que tenés en el radar esta semana: ${cleanTTS(data.watchNext)}.`);
+    lines.push(`Eso es todo por hoy. El Market Brief vuelve mañana a las siete de la mañana. Buena jornada de inversiones.`);
+    return lines.join(' ');
+  },
+  splitChunks(text, max=220) {
+    const sents = text.match(/[^.!?]+[.!?]+\s*/g) || [text];
+    const chunks = []; let cur = '';
+    for (const s of sents) { if ((cur + s).length > max && cur) { chunks.push(cur.trim()); cur = s; } else cur += s; }
+    if (cur.trim()) chunks.push(cur.trim());
+    return chunks.length ? chunks : [text];
+  },
+  loadVoices() {
+    const sel = document.getElementById('voiceSelect'); if (!sel) return;
+    const all = window.speechSynthesis.getVoices(); if (!all.length) return;
+    const ar = all.filter(v=>v.lang==='es-AR'), es = all.filter(v=>v.lang==='es-ES');
+    const oth = all.filter(v=>v.lang.startsWith('es-')&&v.lang!=='es-AR'&&v.lang!=='es-ES');
+    const rest = all.filter(v=>!v.lang.startsWith('es'));
+    const ordered = [...ar,...es,...oth,...rest];
+    sel.innerHTML = ordered.map(v=>`<option value="${v.name}">${v.name} (${v.lang})</option>`).join('');
+    if (ar.length) sel.value = ar[0].name; else if (es.length) sel.value = es[0].name; else if (oth.length) sel.value = oth[0].name;
+  },
+  getSettings() { return { voice: document.getElementById('voiceSelect')?.value, rate: parseFloat(document.getElementById('rateSlider')?.value||'0.95'), pitch: parseFloat(document.getElementById('pitchSlider')?.value||'1.0'), vol: parseFloat(document.getElementById('volSlider')?.value||'1.0') }; },
+  makeUtt(text) {
+    const utt = new SpeechSynthesisUtterance(text); const cfg = this.getSettings();
+    if (cfg.voice) { const v = window.speechSynthesis.getVoices().find(v=>v.name===cfg.voice); if (v) utt.voice = v; }
+    utt.lang = 'es-AR'; utt.rate = cfg.rate; utt.pitch = cfg.pitch; utt.volume = cfg.vol; return utt;
+  },
+  play() { if (!window.speechSynthesis) return; window.speechSynthesis.cancel(); const script = this.buildScript(this.data); this.chunks = this.splitChunks(script); this.idx = 0; this.state = 'playing'; this.updateUI(); this.playChunk(); },
+  playChunk() { if (this.state !== 'playing') return; if (this.idx >= this.chunks.length) { this.state='finished'; this.updateUI(); return; } const utt = this.makeUtt(this.chunks[this.idx]); utt.onend = () => { if (this.state==='playing') { this.idx++; this.updateUI(); this.playChunk(); } }; utt.onerror = (e) => { if (e.error==='interrupted'||e.error==='canceled') return; this.state='error'; this.updateUI(); }; window.speechSynthesis.speak(utt); },
+  pause() { if (this.state !== 'playing') return; window.speechSynthesis.pause(); this.state = 'paused'; this.updateUI(); },
+  resume() { if (this.state !== 'paused') return; window.speechSynthesis.resume(); this.state = 'playing'; this.updateUI(); },
+  stop() { window.speechSynthesis.cancel(); this.state = 'idle'; this.idx = 0; this.updateUI(); },
+  onRate(v) { document.getElementById('rateVal').textContent=parseFloat(v).toFixed(2).replace('.',',')+'\xd7'; },
+  onPitch(v) { document.getElementById('pitchVal').textContent=parseFloat(v).toFixed(1).replace('.',','); },
+  onVol(v) { document.getElementById('volVal').textContent=Math.round(v*100)+'%'; },
+  onVoiceChange() {},
+  updateUI() {
+    const sm = { idle:{t:'Listo',c:'as-idle'}, playing:{t:'Reproduciendo...',c:'as-playing'}, paused:{t:'Pausado',c:'as-paused'}, finished:{t:'Finalizado',c:'as-finished'}, error:{t:'Error de voz',c:'as-error'} };
+    const s = sm[this.state]; const el = document.getElementById('audioStatus');
+    if (el) { el.textContent=s.t; el.className='audio-status '+s.c; }
+    const playing=this.state==='playing', paused=this.state==='paused', active=playing||paused;
+    const b=id=>document.getElementById(id);
+    if(b('btnPlay')) b('btnPlay').disabled=active; if(b('btnPause')) b('btnPause').disabled=!playing;
+    if(b('btnResume')) b('btnResume').disabled=!paused; if(b('btnStop')) b('btnStop').disabled=!active;
+    const pct=this.chunks.length?Math.round((this.idx/this.chunks.length)*100):0;
+    const pf=b('progressFill'); if(pf)pf.style.width=(this.state==='finished'?100:pct)+'%';
+    const pl=b('progressLbl'); if(pl){if(this.state==='playing'||this.state==='paused')pl.textContent=`Fragmento ${this.idx+1} de ${this.chunks.length}`;else if(this.state==='finished')pl.textContent='Reproducción completa ✓';else pl.textContent='';}
+  }
+};
+
+function initAudioPlayer(data) {
+  if (!window.speechSynthesis) return;
+  AP.data = data; AP.state = 'idle'; AP.idx = 0; AP.chunks = [];
+  AP.loadVoices(); window.speechSynthesis.onvoiceschanged = () => AP.loadVoices(); AP.updateUI();
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && window.speechSynthesis) window.speechSynthesis.cancel();
+});
+
+// ╔══════════════════════════════════════════════════════╗
+// ║  INIT — fetch desde GitHub Pages                    ║
+// ╚══════════════════════════════════════════════════════╝
+async function init() {
+  if (window.speechSynthesis) window.speechSynthesis.getVoices();
+  // Fetch latest data from GitHub Pages
+  const latest = await fetchDay(null);
+  if (latest) persist(latest);
+  const ds = getDates();
+  if (!ds.length) {
+    document.getElementById('main').innerHTML = '<div class="card"><div class="cb"><div class="empty-state"><h3>Sin datos aún</h3><p>El resumen se publica automáticamente a las 7am ARG. Volvé más tarde.</p></div></div></div>';
+    return;
+  }
+  offset = 0;
+  render(getByDate(ds[0]));
+  syncNav();
+}
+init();
+</script>
+</body>
+</html>
