@@ -1,0 +1,96 @@
+{
+  "date": "2026-07-20",
+  "generated": "2026-07-20T06:05:00-03:00",
+  "ticker": {
+    "btc":   { "price": "US$64.199", "change": "-0,2%",  "positive": false },
+    "usd":   { "price": "$1.535",    "change": "+0,3%",  "positive": false },
+    "sp500": { "price": "7.443",     "change": "-0,19%", "positive": false }
+  },
+  "highlights": [
+    "Tensiones militares EEUU-Irán presionan los mercados desde la apertura: el S&P 500 cae -0,19% y el Dow Jones pierde más de 300 puntos, aunque el humor mejora a media mañana ante señales diplomáticas de Teherán",
+    "La Fed gira hawkish: el mercado ahora descuenta 53% de probabilidad de una suba de tasas en septiembre, revirtiendo las expectativas de recortes de hace apenas 30 días",
+    "El petróleo WTI sube a US$82,38 impulsado por la escalada geopolítica en el Golfo Pérsico, lo que presiona al oro hacia abajo a pesar del contexto de riesgo",
+    "Bitcoin cotiza en US$64.199 con caída de -0,2%, acumulando una baja de más de US$53.000 contra el precio de hace un año; Standard Chartered mantiene su target de US$100.000 para fin de 2026",
+    "El riesgo país argentino se ubica en ~416 bps, consolidando la mejora de los últimos meses y dando soporte a los activos locales"
+  ],
+  "hiloConductor": [
+    {
+      "topic": "Ciclo de tasas de la Fed",
+      "status": "ongoing",
+      "lastMention": "19 jul 2026",
+      "update": "La narrativa cambió radicalmente: tras semanas descontando recortes, el mercado ahora le asigna 53% de probabilidad a una suba en septiembre. La presión la ejercen el petróleo subiendo y la inflación que no cede. El dato clave de la semana: CPI del jueves."
+    },
+    {
+      "topic": "Tensiones geopolíticas EEUU-Irán",
+      "status": "new",
+      "lastMention": "20 jul 2026",
+      "update": "Cruces militares entre EEUU e Irán generaron volatilidad desde la apertura del lunes. El canciller iraní abrió la puerta a una negociación diplomática, lo que mitigó parcialmente el sell-off. Tema a seguir de cerca esta semana."
+    },
+    {
+      "topic": "Compresión del riesgo país argentino",
+      "status": "ongoing",
+      "lastMention": "18 jul 2026",
+      "update": "El EMBI Argentina se estabiliza en torno a los 416 bps, consolidando la mejora de los últimos meses. La brecha cambiaria sigue comprimiéndose. Próximo catalizador: licitación de deuda del martes y datos de inflación de junio."
+    }
+  ],
+  "sections": {
+    "usa": {
+      "title": "Mercado USA",
+      "icon": "🇺🇸",
+      "hc": "ch-usa", "bc": "b-blue", "bt": "NYSE · NASDAQ",
+      "content": "Wall Street abrió el lunes bajo presión por la escalada entre EEUU e Irán durante el fin de semana. El S&P 500 retrocedió -0,19% hasta los 7.443 puntos, el Nasdaq cedió -0,05% y el Dow Jones fue el más golpeado con -0,59% (307 puntos). El VIX, índice del miedo, trepó reflejando el aumento de incertidumbre geopolítica.\n\nEl driver negativo es doble: por un lado, el shock geopolítico que sube el petróleo y amenaza con realimentar la inflación; por el otro, la Fed que gira hawkish. El mercado ahora descontaba recortes para septiembre hace apenas un mes, y hoy precio una suba. El catalizador más importante de la semana es el CPI del jueves: si la inflación sorprende al alza, el escenario de suba de tasas se consolida.",
+      "items": [
+        { "label": "S&P 500",   "value": "7.443",  "change": "-0,19%", "positive": false },
+        { "label": "Nasdaq",    "value": "25.508", "change": "-0,05%", "positive": false },
+        { "label": "Dow Jones", "value": "51.839", "change": "-0,59%", "positive": false },
+        { "label": "VIX",       "value": "~17,5",  "change": "+8%",    "positive": false }
+      ]
+    },
+    "argentina": {
+      "title": "Argentina",
+      "icon": "🇦🇷",
+      "hc": "ch-arg", "bc": "b-gold", "bt": "MERVAL · FX",
+      "content": "El dólar blue arrancó la semana en $1.535 para la venta (compra $1.515), con una variación prácticamente plana respecto al viernes. El dólar oficial del Banco Nación cotiza en torno a $1.480-1.500, lo que implica una brecha blue-oficial de apenas 2-3%, el nivel más bajo en años y una señal clara de estabilización cambiaria bajo el programa del FMI.\n\nEl riesgo país se ubica en ~416 bps, consolidando la mejora sostenida de los últimos meses. Este nivel es significativo: implica que el mercado le asigna a Argentina un riesgo crediticio mucho menor al de hace un año (cuando superaba los 700 bps). La compresión del spread favorece tanto a los bonos soberanos como a los CEDEARs de empresas argentinas.",
+      "items": [
+        { "label": "Dólar Blue",    "value": "$1.535",   "change": "+0,3%",   "positive": false },
+        { "label": "Dólar Oficial", "value": "~$1.490",  "change": "s/c",     "positive": true  },
+        { "label": "Riesgo País",   "value": "~416 bps", "change": "≈ plano", "positive": true  },
+        { "label": "Brecha FX",     "value": "~3%",      "change": "mín.",    "positive": true  }
+      ]
+    },
+    "macro": {
+      "title": "Macro Global",
+      "icon": "🌐",
+      "hc": "ch-mac", "bc": "b-green", "bt": "FED · COMMODITIES",
+      "content": "El petróleo WTI opera en US$82,38/barril, subiendo +0,3% al inicio de la semana por las tensiones en el Golfo Pérsico. Paradójicamente, el oro cae pese al contexto de riesgo geopolítico: cotiza en torno a US$4.000/oz y cede terreno porque el petróleo más caro implica más inflación, lo que refuerza las expectativas de tasas altas y hace que el oro (que no paga cupón) sea menos atractivo.\n\nEn el mercado de bonos, los Treasuries a 10 años rinden 4,32%. La inversión de la curva se mantiene como señal de alerta macroeconómica. La Fed ha girado claramente hawkish: la funcionaria Beth Hammack llamó la semana pasada a mantener tasas altas por más tiempo, y los futuros ahora le asignan más del 50% de probabilidad a una suba en septiembre.",
+      "items": [
+        { "label": "WTI",          "value": "US$82,38", "change": "+0,3%",     "positive": true  },
+        { "label": "Oro",          "value": "US$4.000", "change": "-0,5%",     "positive": false },
+        { "label": "10Y Treasury", "value": "4,32%",    "change": "+3 bps",    "positive": false },
+        { "label": "Fed (sep.)",   "value": "+25 bps",  "change": "53% prob",  "positive": false }
+      ]
+    },
+    "crypto": {
+      "title": "Crypto",
+      "icon": "₿",
+      "hc": "ch-cry", "bc": "b-purple", "bt": "BTC FOCUS",
+      "content": "Bitcoin cotiza en US$64.199, con una leve caída de -0,2% en las últimas 24 horas. La apertura del lunes fue de US$64.680 y cedió terreno durante la mañana junto con los demás activos de riesgo, presionado por el contexto geopolítico y el giro hawkish de la Fed. El dato más llamativo: el precio actual está US$53.000 por debajo del valor de hace exactamente un año, lo que indica que los compradores que entraron entre los US$75K y US$126K están realizando pérdidas latentes.\n\nNo obstante, el sentimiento institucional sigue siendo constructivo. Standard Chartered reiteró la semana pasada su precio objetivo de US$100.000 para fin de 2026. Los ETFs spot en EEUU mantienen flujos positivos, aunque sin los récords de meses anteriores. El mercado está dividido: bull y bear views coexisten con igual convicción para el segundo semestre.",
+      "items": [
+        { "label": "Bitcoin",     "value": "US$64.199", "change": "-0,2%",     "positive": false },
+        { "label": "Apertura",    "value": "US$64.680", "change": "7am ET",    "positive": false },
+        { "label": "Target SCB",  "value": "US$100K",   "change": "fin 2026",  "positive": true  },
+        { "label": "Sentimiento", "value": "Mixto",     "change": "H2 2026",   "positive": true  }
+      ]
+    }
+  },
+  "conclusions": "El lunes arranca con un mercado nervioso por dos factores que se refuerzan mutuamente: geopolítica (EEUU-Irán) y Fed hawkish. La clave de la semana es el CPI del jueves: si la inflación americana sorprende al alza, el escenario de suba de tasas en septiembre se consolida, lo que presionaría aún más a los activos de riesgo.\n\nPara el portfolio de Juanma, el contexto americano es de cautela a corto plazo. La posición en renta variable americana (S&P/Nasdaq via CEDEARs o ETFs) puede tener presión si el CPI es malo. El oro es paradójicamente neutral: el riesgo geopolítico lo sostiene pero la expectativa de tasas altas lo frena.\n\nEn Argentina, la historia sigue siendo positiva de forma independiente al contexto global: el riesgo país por debajo de 420 bps y la brecha cambiaria mínima son señales de estabilidad que favorecen tanto a bonos soberanos como a los CEDEARs de empresas locales. Bitcoin en US$64K no muestra urgencia ni de compra ni de venta: el target institucional de US$100K para fin de año está vivo, pero la macro global es un viento en contra.",
+  "watchNext": "CPI americano (jueves) · Decisión de política monetaria de la Fed (próxima reunión) · Licitación de deuda Argentina (martes) · Evolución tensiones EEUU-Irán",
+  "sources": [
+    { "name": "Yahoo Finance",      "url": "https://finance.yahoo.com/markets/live/", "topics": "S&P 500 · Nasdaq · Bitcoin" },
+    { "name": "The Street",         "url": "https://www.thestreet.com",               "topics": "Mercado USA · Análisis" },
+    { "name": "Fortune / Forbes",   "url": "https://fortune.com",                     "topics": "BTC · Petróleo · Precios" },
+    { "name": "Ambito / El Cronista","url": "https://www.ambito.com",                 "topics": "Dólar · Merval · Riesgo País" },
+    { "name": "FX Leaders",         "url": "https://www.fxleaders.com",               "topics": "Oro · Fed · Macro" },
+    { "name": "Dolarito.ar",        "url": "https://www.dolarito.ar",                 "topics": "Cotizaciones FX Argentina" }
+  ]
+}
